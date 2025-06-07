@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.io import wavfile
 import matplotlib.pyplot as plt
+from sigtool.transform import FFT
 
 
 class Signal:
@@ -36,3 +37,7 @@ class Signal:
 
     def apply_filter(self, filter_obj):
         self.data = filter_obj.apply(self.data, self.sampling_rate)
+
+    def fft(self, nbins):
+        fft = FFT(self.sampling_rate, nbins)
+        return fft.compute_fft(self.data)
