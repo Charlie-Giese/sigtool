@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.io import wavfile
 import matplotlib.pyplot as plt
-from sigtool.transform import FFT
+from sigtool.transform import FFT, FFTResult
 
 
 class Signal:
@@ -40,4 +40,5 @@ class Signal:
 
     def fft(self, nbins):
         fft = FFT(self.sampling_rate, nbins)
-        return fft.compute_fft(self.data)
+        freqs, fft_vals = fft.compute_fft(self.data)
+        return FFTResult(freqs, fft_vals, fft)

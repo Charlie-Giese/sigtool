@@ -1,16 +1,32 @@
 import numpy as np
 from sigtool.transform import FFT
-from sigtool.signal import Signal
 
 
 def test_fft_not_crash_and_properties():
-    sample_rate = 1000
-    data = np.sin(2 * np.pi * 10 * np.linspace(0, 1, sample_rate))
-    sig = Signal(data, sample_rate)
 
-    N = 128
+    fs = 1000
+    f0 = 50
+    t = np.linspace(0, 1, fs, endpoint=False)
+    signal = np.sin(2 * np.pi * f0 * t)
 
-    freq, fft_vals = sig.fft(N)
+    fft = FFT(fs)
+    freqs, fft_vals = fft.compute_fft(signal)
 
-    assert len(freq) == N
-    assert len(fft_vals) == N
+    assert len(freqs) == fs
+    assert len(fft_vals) == fs
+
+
+def test_fft_magnitude_peak():
+    fs = 1000
+    f0 = 50
+    t = np.linspace(0, 1.0, fs, endpoint=False)
+    signal = np.sin(2 * np.pi * f0 * t)
+
+    fft = FFT(fs)
+    freqs, fft_vals = fft.compute_fft(signal)
+    magnitude = fft.compute_magnitude(fft_vals)
+
+    peak_idx = np.argmax(magnitude)
+    peak_freq = freqs[peak_idx]
+
+    assert abs(peak_freq - f0) < 1.0
