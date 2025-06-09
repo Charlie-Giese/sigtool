@@ -1,6 +1,6 @@
 # sigtool
 
-**sigtool** is a lightweight Python 3 library for basic digital signal processing (DSP), built with simplicity and clean structure in mind. It is intended as a demonstration of good object-oriented programming practices in Python, particularly for use cases where Python is an auxiliary tool in a systems-level environment.
+**sigtool** is a lightweight Python 3 library for basic digital signal processing (DSP), built with simplicity and clean structure in mind.
 
 ## Features
 
