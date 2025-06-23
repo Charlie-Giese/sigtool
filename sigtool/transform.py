@@ -39,10 +39,11 @@ class FFTPlotMode(Enum):
 
 
 class FFTResult:
-    def __init__(self, freqs, fft_vals, fft_impl):
+    def __init__(self, freqs, fft_vals, fft_impl, window_type=None):
         self.freqs = freqs
         self.fft_vals = fft_vals
         self._fft = fft_impl
+        self.window_type = window_type
 
     def power(self):
         return self._fft.compute_power(self.fft_vals)
@@ -95,7 +96,8 @@ class FFTResult:
             raise ValueError(f"Unsupported plot mode: {mode}")
 
         plt.plot(freqs, y, c='k', **kwargs)
-        plt.title(f"FFT - {mode.name.capitalize()}" + (" (dB)" if db else ""))
+        plt.title(f"FFT {mode.name.capitalize()} Spectrum" +
+                  (f" (window: {self.window_type})" if self.window_type else ""))
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.grid(True)
